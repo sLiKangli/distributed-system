@@ -1,0 +1,29 @@
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+
+eureka:
+  server:
+    # 自我保护机制  
+    enable-self-preservation: true
+    # 设置清理间隔（单位：毫秒 默认是60*1000）
+    eviction-interval-timer-in-ms: 60000
+  instance:
+    # 实例所在服务器 （ip/域名）
+    hostname: localhost
+  client:
+    #不把自己作为一个客户端注册到自己身上
+    register-with-eureka: false
+    #不需要从服务端获取注册信息（因为在这里自己就是服务端，而且已经禁用自己注册了）  
+    fetch-registry: false
+    # 注册地址
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+spring:
+  application:
+    # 最终注册到eureka的名称，集群是名称相同
+    name: eureka-server
+  jmx:
+    # 当同一个tomcat部署多个微服务时，此名称要不同
+    default-domain: server-01

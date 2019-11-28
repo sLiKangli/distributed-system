@@ -1,0 +1,48 @@
+server:
+  port: 8070
+  tomcat:
+    uri-encoding: UTF-8
+
+eureka:
+  instance:
+    # 实例在 eureka 服务器的名称，必须唯一
+    instance-id: zuul-01
+    # 实例所在服务器 （ip/域名）
+    hostname: localhost
+    # 是否显示ip地址
+    prefer-ip-address: true
+    # Eureka客户端需要多长时间发送心跳给eureka服务器，表明它仍 然活着,默认为30 秒 (与下面配置的单位都是秒)  
+    leaseRenewalIntervalInSeconds: 20
+    # Eureka服务器在接收到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除，默认为90秒
+    leaseExpirationDurationInSeconds: 90
+  client:
+    # 注册地址
+    service-url:
+      defaultZone: http://localhost:8080/eureka/
+spring:
+  application:
+    # 最终注册到eureka的名称，集群是名称相同
+    name: zuul
+  jmx:
+    # 当同一个tomcat部署多个微服务时，此名称要不同
+    default-domain: zuul-01
+
+zuul:
+  # 禁用直接通过微服务名称访问 非必须，加上比较好
+  ignored-services: "*"
+  routes:
+    # 自定义一套规则，这个myOrder名字随意，和下面的myOrder没有关系
+    myOrder:
+      # 实例在 eureka 服务器的名称
+      serviceId: ORDER
+      # 自定义访问路径， myOrder 拥有替换实例名称 ORDER，/**代表所有层级，/* 代表一层
+      path: /myOrder/**
+    myUser:
+      serviceId: USER
+      path: /myUser/**
+  #zuul超时设置
+  host:
+    #默认2000
+    connect-timeout-millis: 6000
+    #默认1000
+    socket-timeout-millis: 6000

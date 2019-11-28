@@ -1,0 +1,125 @@
+server:
+  port: 8101
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    # 最终注册到eureka的名称，集群是名称相同
+    name: order
+  jackson:
+    # 日期自动格式化
+    date-format: yyyy/MM/dd HH:mm:ss
+    time-zone: GMT+8
+  jmx:
+    # 当同一个tomcat部署多个微服务时，此名称要不同
+    default-domain: order-01
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://120.79.20.233:8066/manage?useUnicode=true&characterEncoding=utf-8&serverTimezone=CTT
+    username: root
+    password: 123456
+    hikari:
+      connection-timeout: 60000
+      idle-timeout: 60000
+      validation-timeout: 30000
+      login-timeout: 5
+      max-lifetime: 60000
+  # 该参数用来开启重试机制，默认是关闭,开启ribbon重试，配合下面的ribbon配置
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+
+# 超时配置，默认要遵循一个规范： zuul > hystrix > ribbon
+# 重试机制
+ribbon:
+  # ribbon超时配置
+  ReadTimeout: 6000
+  ConnectTimeout: 6000
+  # 对所有操作请求都进行重试
+  OkToRetryOnAllOperations: true
+  # 对当前实例的重试次数
+  ribbon.MaxAutoRetries: 1
+  # 切换实例的重试次数
+  MaxAutoRetriesNextServer: 1
+  #根据如上配置，当访问到故障请求的时候，它会再尝试访问一次当前实例（次数由MaxAutoRetries配置），
+  #如果不行，就换一个实例进行访问，如果还是不行，再换一次实例访问（更换次数由MaxAutoRetriesNextServer配置），
+  #如果依然不行，返回失败信息。
+
+
+
+eureka:
+  instance:
+    # 实例在 eureka 服务器的名称，必须唯一
+    instance-id: order-01
+    # 实例所在服务器 （ip/域名）
+    hostname: localhost
+    # 是否显示ip地址
+    prefer-ip-address: true
+    # Eureka客户端需要多长时间发送心跳给eureka服务器，表明它仍 然活着,默认为30 秒 (与下面配置的单位都是秒)  
+    leaseRenewalIntervalInSeconds: 20
+    # Eureka服务器在接收到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除，默认为90秒
+    leaseExpirationDurationInSeconds: 90
+  client:
+    # 注册地址
+    service-url:
+      defaultZone: http://localhost:8080/eureka/
+
+feign:
+  hystrix:
+    # feign 整合 hystrix, 启用。
+    enabled: true
+hystrix:
+  command:
+    # 通过方法签名作为key单独指定配置
+    "UserServiceProducer#getUserByOrder(Order)":
+      execution:
+        isolation:
+          thread:
+            # 方法超时配置，默认1s, 一定要大于等于ribbon的超时时间
+            timeoutInMilliseconds: 6000
+    # default 默认配置全局的，通过在代码中指定commandKey进行单独配置
+    default:
+      execution:
+        isolation:
+          # 隔离策略，默认是Thread, 可选Thread(线程池)｜ SEMAPHORE（信号量）
+          strategy: THREAD
+          # 是否给方法设置超时时间， 默认true
+          enabled: true
+          thread:
+            # 方法超时配置，默认1s, 一定要大于等于ribbon的超时时间
+            timeoutInMilliseconds: 3500
+      circuitBreaker:
+        # 熔断器是否可用 默认 true
+        enabled: true
+        # 熔断器强制打开，始终保持打开状态。默认值FLASE。
+        forceOpen: false
+        # 熔断器强制关闭，始终保持关闭状态。默认值FLASE。
+        forceClosed: false
+        # 设定错误百分比，默认值50%，例如一段时间（10s）内有100个请求，其中有55个超时或者异常返回了，
+        # 那么这段时间内的错误百分比是55%，大于了默认值50%，这种情况下触发熔断器-打开。
+        errorThresholdPercentage: 50
+        # 默认值20.意思是至少有20个请求才进行errorThresholdPercentage错误百分比计算。
+        # 比如一段时间（10s）内有19个请求全部失败了。错误百分比是100%，但熔断器不会打开，
+        # 因为requestVolumeThreshold的值是20. 这个参数非常重要，熔断器是否打开首先要满足这个条件
+        requestVolumeThreshold: 20
+        # 半开试探休眠时间，默认值5000ms。当熔断器开启一段时间之后比如5000ms，会尝试放过去一部分流量
+        # 进行试探，确定依赖服务是否恢复
+        sleepWindowInMilliseconds: 5000
+
+# mybatis config
+mybatis-plus:
+  type-aliases-package: com.yqn.groupbuy.domain
+  mapper-locations: classpath*:mapper/*.xml
+  global-config:
+    # 解决使用mycat中间件不能查询识别id AS id的问题，通过读源码TableInfoHelper表的初始化得知
+    # 配置此属性可以解决，另外实体类的 @TableId也不要写value="id"了。这一切的前提是实体类和
+    # 数据库的主键相同，如都叫id。
+    db-column-underline: false
