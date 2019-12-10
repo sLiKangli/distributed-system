@@ -1,6 +1,11 @@
 package com.yqn.user.user01.common;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
 
+
+@Data
+@Accessors(chain = true)
 public class ResponseMsg {
 
 	private Integer code;
@@ -18,37 +23,44 @@ public class ResponseMsg {
 	 * 设置错误消息
 	 * 此时的错误码自动为100
 	 */
-	public void setRequestError(String msg) {
+	public ResponseMsg setRequestError(String msg) {
 		
 		this.code = 100;
 		this.msg = msg;
+		return this;
 	}
 	
 	/**
 	 * 设置请求结果码
 	 */
-	public void setRequestError(ResponseCode requestCode) {
+	public ResponseMsg setRequestError(ResponseCode requestCode) {
 	
 		this.code = requestCode.getCode();
 		this.msg = requestCode.getMsg();
+
+		return this;
 	}
 
 	
 	/**
 	 * 设置请求成功的结果对象
 	 */
-	public void setSuccessObject(Object obj) {
+	public ResponseMsg setSuccessObject(Object obj) {
 		this.code = 0;
 		this.result = obj;
+
+		return this;
 	}
 
 	/**
 	 * 设置请求成功的结果对象
 	 */
-	public void setSuccessObject(Object obj, ResponseCode requestCode) {
+	public ResponseMsg setSuccessObject(Object obj, ResponseCode requestCode) {
 		this.result = obj;
 		this.code = requestCode.getCode();
 		this.msg = requestCode.getMsg();
+
+		return this;
 	}
 
 	@Override

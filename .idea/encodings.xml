@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://D:/download/tx-lcn-5.0.2.RELEASE/txlcn-tm" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-01" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/server-01" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stock-01" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stock-01" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stock-01" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stock-01" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-002" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-01" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-02" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/user-02" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/user-02" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/user-02" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/user-02" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/user-02" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/user-02/user-2" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/zuul-01" charset="UTF-8" />
   </component>
 </project>

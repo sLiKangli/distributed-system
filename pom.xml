@@ -24,6 +24,7 @@
         <module>user-01</module>
         <module>user-02</module>
         <module>order-01</module>
+        <module>stock-01</module>
         <module>server-01</module>
         <module>zuul-01</module>
     </modules>
