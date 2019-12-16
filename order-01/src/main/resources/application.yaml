@@ -119,7 +119,7 @@ hystrix:
           enabled: true
           thread:
             # 方法超时配置，默认1s, 一定要大于等于ribbon的超时时间
-            timeoutInMilliseconds: 3500
+            timeoutInMilliseconds: 6000
       circuitBreaker:
         # 熔断器是否可用 默认 true
         enabled: true
@@ -150,6 +150,6 @@ mybatis-plus:
     db-column-underline: false
 
 # LCN 提供分布式事务中间件地址:端口
-tx-lcn:
-  client:
-    manager-address: 127.0.0.1:8079
+#tx-lcn:
+#  client:
+#    manager-address: 127.0.0.1:8079

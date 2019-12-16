@@ -142,11 +142,11 @@ mybatis-plus:
     # 命名法自动转换。
     db-column-underline: false
 
-# LCN 提供分布式事务中间件地址:端口
-tx-lcn:
-  client:
-    manager-address: 127.0.0.1:8079
-  # 微服务集群且用到 LCN事务模式时，为保证性能开启TX-LCN重写的负载策略
-  springcloud:
-    loadbalance:
-      enabled: true
+## LCN 提供分布式事务中间件地址:端口
+#tx-lcn:
+#  client:
+#    manager-address: 127.0.0.1:8079
+#  # 微服务集群且用到 LCN事务模式时，为保证性能开启TX-LCN重写的负载策略
+#  springcloud:
+#    loadbalance:
+#      enabled: true

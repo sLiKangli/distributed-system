@@ -11,7 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableEurekaClient
 @SpringBootApplication
-@EnableDistributedTransaction
+//@EnableDistributedTransaction
 public class Order01Application {
 
     public static void main(String[] args) {

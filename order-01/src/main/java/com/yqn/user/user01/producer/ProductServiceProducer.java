@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * value : 提供服务的应用在Eureka的服务名称
  * fallback : 整合hystrix, 该服务提供者出错时的容错方案
  * fallbackFactory：方法降级捕获工厂，和fallback同时出现此设置无效，可以得到方法降级原因
- *
+ *,  fallback = ProductServiceProducerFallback.class
  */
 @FeignClient(value = "STOCK",  fallback = ProductServiceProducerFallback.class)
 public interface ProductServiceProducer {

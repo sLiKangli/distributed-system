@@ -4,6 +4,7 @@ import com.netflix.loadbalancer.*;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -31,6 +32,7 @@ public class AppConfig {
      * 下面几个类是ribbon提供的7中默认策略
      */
     @Bean
+    @Primary
     public IRule getRule(){
 
         return new RoundRobinRule();  // 轮询

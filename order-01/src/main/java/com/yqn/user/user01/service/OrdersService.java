@@ -29,7 +29,7 @@ public class OrdersService extends ServiceImpl<OrdersMapper, Orders> {
     @Resource
     private ProductServiceProducer productServiceProducer;
 
-    @LcnTransaction //分布式事务注解
+    // @LcnTransaction //分布式事务注解
     @Transactional(rollbackFor = Exception.class)
     public ResponseMsg buyProduct() {
 
@@ -45,6 +45,11 @@ public class OrdersService extends ServiceImpl<OrdersMapper, Orders> {
             throw new RuntimeException("下单错误");
         }
 
-        return productServiceProducer.reduceStock(1);
+        ResponseMsg responseMsg = productServiceProducer.reduceStock(1);
+        if(responseMsg.getCode() == 0){
+            throw new RuntimeException("减库存失败");
+        }
+
+        return responseMsg;
     }
 }

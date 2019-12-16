@@ -23,7 +23,7 @@ public class ProductService extends ServiceImpl<ProductMapper, Product> {
     @Resource
     ProductMapper productMapper;
 
-    @LcnTransaction
+    // @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
     public ResponseMsg reduceStock(Integer id){
 

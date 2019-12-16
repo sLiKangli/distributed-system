@@ -10,9 +10,9 @@
         <module name="user-01" />
         <module name="server-01" />
         <module name="user-02" />
-        <module name="stock-01" />
-        <module name="order-01" />
         <module name="zuul-01" />
+        <module name="order-01" />
+        <module name="stock-01" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
